@@ -1,5 +1,5 @@
 # Tello-Recon 🎯
-Project for COMP-361: A drone recon automation system built for the DJU Tello Drone
+Project for COMP-361: A drone recon automation system built for the DJI Tello Drone
 
 ### Warning
 This software is provided "as is"- use this software at your own risk. 

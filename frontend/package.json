@@ -1,0 +1,24 @@
+{
+  "name": "tello-recon__frontend",
+  "version": "1.0.0",
+  "description": "the frontend / web interface component of the tello-recon project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"no tests yet\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MykalMachon/Tello-Recon.git"
+  },
+  "keywords": [
+    "automation",
+    "robotics",
+    "drone"
+  ],
+  "author": "Mykal Machon <mykal@tinybox.dev>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MykalMachon/Tello-Recon/issues"
+  },
+  "homepage": "https://github.com/MykalMachon/Tello-Recon#readme"
+}

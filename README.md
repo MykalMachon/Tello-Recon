@@ -15,18 +15,22 @@ This has a number of practical applications:
 3. TBD
 
 ## To-do's
-- [ ] Basic Connection & Controls
+- [ ] Basic Connection & Controls (make sure they work) 
   - [ ] Setup UDP connection to the tello
   - [ ] Setup programmatic control systems (height, pitch, acceleration, etc)
   - [ ] Setup video streaming / recording for review
   - [ ] Setup possible manual override system
 - [ ] Frontend / Clientside
-  - [ ] Determine what level of control is needed
+  - [ ] Setup basic client that can talk with the backend
+  - [ ] Setup manual override mode with basic controls
+  - [ ] Setup live video feed in browser
+  - [ ] Setup video review system
   - [ ] TBD
 - [ ] Backend 
   - [ ] Setup UDP connection
   - [ ] Setup websocket streaming of video
   - [ ] Setup secure login system for access to the drone
+  - [ ] Setup cloud storage backup of videos
 - [ ] AI / Pathfinding
-  - [ ] Literature review
+  - [ ] Literature review on pathfinding for drones
   - [ ] TBD

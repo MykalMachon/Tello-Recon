@@ -20,7 +20,13 @@ const Counter = () => {
         onClick={decrementCount}
         icon={<MinusIcon />}
       />
-      <Input value={count} size="sm" isReadOnly />
+      <Input
+        value={count}
+        size="sm"
+        isReadOnly
+        width="3.25rem"
+        textAlign="center"
+      />
       <IconButton
         aria-label="Increment Counter"
         onClick={incrementCount}

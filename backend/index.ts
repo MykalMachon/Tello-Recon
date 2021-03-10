@@ -1,16 +1,30 @@
-import express from 'express';
+import drone, { sendCommand } from './controllers/flightController';
+import { createServer } from 'http';
+import { Server, Socket } from 'socket.io';
+import { send } from 'node:process';
 
-// TODO setup PORT as an environment variable
-const app = express();
-const PORT = 8080;
+const server = createServer();
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+  },
+});
 
-// TODO setup UDP packet management and web sockets (socket.io) to allow for data streaming
-app.get('/', (req, res) => {
-  res.send({
-    data: 'some data',
+io.on('connection', (socket: Socket) => {
+  console.log('we have a connection!');
+  socket.on('hello', () => console.log('message from client recieved!'));
+  socket.on('drone-connect', () => {
+    sendCommand('command');
+    socket.emit('drone-connected');
   });
+  socket.on('drone-status', () => sendCommand('battery?'));
+  socket.on('takeoff', () => sendCommand('takeoff'));
+  socket.on('land', () => sendCommand('land'));
 });
 
-app.listen(PORT, () => {
-  console.log(`✨[backend]: Server is running at http://localhost:${PORT}`);
+drone.on('message', (msg: string) => {
+  console.log(`Tello Says 🤖: ${msg}`);
 });
+
+server.listen(5000);
+console.log('\n🚀 Socket.io Server is listening on http://locahost:5000 \n');

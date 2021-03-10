@@ -18,6 +18,19 @@ This has a number of practical applications:
 2. **Site surveying for progress** : construction contractor's could use this to take visual snapshots of progress over time.
 3. TBD
 
+## Getting Started
+
+Tello-Recon requires you to run both the frotend and backend simultaneously. 
+- The frontend acts as a control system and provides a livestream from the drone's camera
+- The backend acts as a bridge between the frontend and the drone
+
+With that in mind, to get this running you'll need to do the following:
+1. `npm install` && `npm run start` in both the `/frontend` and `/backend` folders
+2. turn on your drone
+3. connect to the Tello's wifi network from your computer
+4. open the frotnend in your browser (if everything works you should see a "connected to drone" status message in the web app
+5. Start using your Tello!
+
 ## To-do's
 
 - [ ] Basic Connection & Controls (make sure they work)

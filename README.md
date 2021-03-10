@@ -21,9 +21,9 @@ This has a number of practical applications:
 ## To-do's
 
 - [ ] Basic Connection & Controls (make sure they work)
-  - [ ] Base our backend on [this repo](https://github.com/csscottc/drone-ctrl) (Josh)
-  - [ ] Setup basic client that can talk with the backend (Mykal)
-  - [ ] Setup API based on the Backend (Mykal)
+  - [x] Base our backend on [this repo](https://github.com/csscottc/drone-ctrl) (Josh)
+  - [x] Setup basic client that can talk with the backend (Mykal)
+  - [x] Setup API based on the Backend (Mykal)
   - [ ] Setup video streaming / recording for review (Mykal)
 - [ ] Main Features & Extras
   - [ ] Setup Drone controls in frontend (Josh)

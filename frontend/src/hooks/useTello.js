@@ -10,27 +10,28 @@ const connectTello = (socket) => {
 };
 
 const commandTello = (socket, cmd) => {
+  console.log(cmd);
   socket.emit('passthrough', cmd);
 };
 
 const useTello = () => {
-  const { droneState, setDroneState } = useContext(DroneContext);
-  const [socket, setSocket] = useState(null);
+  const { droneState, dispatch } = useContext(DroneContext);
 
   const sendCommand = (type, cmd) => {
     switch (type) {
       case 'CONNECT':
         const newSocket = io('http://localhost:5000');
-        setSocket(newSocket);
         connectTello(newSocket);
-        setDroneState({
-          ...droneState,
-          socket: socket,
-          status: 'connected',
+        dispatch({
+          type: 'TRY_CONNECTION',
+          payload: {
+            socket: newSocket,
+            status: 'connected',
+          },
         });
         return;
       case 'PASSTHROUGH':
-        commandTello(socket, cmd);
+        commandTello(droneState.socket, cmd);
         return;
       default:
         throw new Error(`command type ${type} is invalid`);

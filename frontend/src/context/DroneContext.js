@@ -17,8 +17,18 @@ const initState = {
   video: null,
 };
 
-const droneReducer = () => {
-  // insert drone reducer
+const droneReducer = (state, action) => {
+  switch (action.type) {
+    case 'TRY_CONNECTION':
+      console.log('attempt connecting');
+      return {
+        ...state,
+        socket: action.payload.socket,
+        status: action.payload.status,
+      };
+    default:
+      return state;
+  }
 };
 
 const DroneProvider = ({ children }) => {

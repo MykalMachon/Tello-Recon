@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
 }
@@ -15,4 +19,92 @@
 
 .App-link {
   color: #61dafb;
+}
+
+/* PAGES */
+.page__home {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  width: 100%;
+  height: 100vh;
+  grid-gap: 0.5em;
+  background: black;
+}
+
+/* VIDEO */
+
+.videoFeed {
+  grid-row: span 3;
+  grid-column: span 4;
+  background: black;
+  color: white;
+}
+
+.videoFeed video {
+  width: 100%;
+  height: 100%;
+}
+
+/* CONTROLLERS */
+.controller {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 7.2em 7.2em 7.2em;
+  grid-template-rows: 7.2em 7.2em;
+  grid-gap: 0.8em;
+}
+
+.controller-wrapper {
+  grid-column: span 2;
+
+  padding: 2em;
+  color: #d1d5db;
+  background: #111827;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.controller-btn__label {
+  font-size: 1.2em;
+  display: block;
+  line-height: 1.5rem;
+}
+
+.controller-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: #1f2937;
+  padding: 1em;
+  border-radius: 0.7em;
+  border: 0px;
+  color: #f3f4f6;
+}
+
+.controller-btn__key {
+  font-size: 1.2em;
+  font-style: italic;
+  text-transform: uppercase;
+  position: absolute;
+  top: 1em;
+  left: 1em;
+  color: #d1d5db;
+}
+
+.controller-btn.pressed {
+  background: #374151;
+}
+
+/* EXTRAS */
+
+.card {
+  background: #111827;
+  color: #d1d5db;
+  padding: 1em;
+}
+
+h4 {
+  margin: 0px 0px 1.5em 0px;
 }

@@ -6,8 +6,15 @@ export const DroneContext = createContext({
     battery: 0,
     status: 'disconnected',
     video: null,
+    log: null,
+    position: {
+      x: 0,
+      y: 0,
+      z: 0,
+      speed: 0,
+    },
   },
-  setDroneState: null,
+  dispatch: null,
 });
 
 const initState = {
@@ -15,12 +22,21 @@ const initState = {
   battery: 0,
   status: 'disconnected',
   video: null,
+  log: null,
+  position: {
+    x: 0,
+    y: 0,
+    z: 0,
+    speed: 0,
+  },
 };
 
+// this handles all actions that can be taken on the drone directly
+// this doesn't include passthrough commands yet as they don't directly impact
+// drone state? (we should probably re-evaluate this)
 const droneReducer = (state, action) => {
   switch (action.type) {
     case 'TRY_CONNECTION':
-      console.log('attempt connecting');
       return {
         ...state,
         socket: action.payload.socket,
@@ -31,6 +47,7 @@ const droneReducer = (state, action) => {
   }
 };
 
+// simple context provider that wraps the application
 const DroneProvider = ({ children }) => {
   const [droneState, dispatch] = useReducer(droneReducer, initState);
 

@@ -30,36 +30,6 @@ const HomePage = () => {
       </div>
     </main>
   );
-
-  // return (
-  //   <div className="App">
-  //     <main className="App-container">
-  //       <h1>Drone Controls</h1>
-  //       <button
-  //         onClick={() => {
-  //           sendCommand('CONNECT');
-  //         }}
-  //       >
-  //         Connect
-  //       </button>
-  //       <button
-  //         onClick={() => {
-  //           sendCommand('PASSTHROUGH', 'takeoff');
-  //         }}
-  //       >
-  //         Takeoff
-  //       </button>
-  //       <button
-  //         onClick={() => {
-  //           sendCommand('PASSTHROUGH', 'land');
-  //         }}
-  //       >
-  //         Land
-  //       </button>
-  //       <code>{JSON.stringify(droneState)}</code>
-  //     </main>
-  //   </div>
-  // );
 };
 
 export default HomePage;

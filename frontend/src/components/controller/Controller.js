@@ -5,6 +5,10 @@ import ControllerButton from './ControllerButton';
 const Controller = () => {
   const { droneState, sendCommand } = useTello();
 
+  // list of all actions the controller can issue to the drone
+  // is used to create and map buttons
+  // TODO add pivot commands
+  // TODO add up / down commands
   const actions = [
     { label: 'Pivot Left', key: 'q', cmd: '' },
     { label: 'Forward', key: 'w', cmd: 'forward 100' },
@@ -16,20 +20,31 @@ const Controller = () => {
     { label: 'Land', key: 'f', cmd: 'land' },
   ];
 
+  // setup listeners for the keyboard
   useEffect(() => {
-    // setup keyboard listeners
-    document.addEventListener('keydown', (e) => {
+    const keyDownHandler = (e) => {
       handlePress(e.key);
-    });
-    document.addEventListener('keyup', (e) => {
+    };
+    const keyUpHandler = (e) => {
       handleRelease(e.key);
-    });
+    };
+
+    // setup keyboard listeners
+    document.addEventListener('keydown', keyDownHandler);
+    document.addEventListener('keyup', keyUpHandler);
+
+    return () => {
+      // remove event listeners on component unmount
+      document.removeEventListener('keydown', keyDownHandler);
+      document.removeEventListener('keyup', keyUpHandler);
+    };
   }, []);
 
   const handlePress = (key, ref) => {
+    console.log(`handling press ${key}`);
     const command = actions.find((control) => control.key === key);
     if (command && droneState.socket) {
-      // if the command exists, send it!
+      // if the command exists && drone exists send the command!
       sendCommand('PASSTHROUGH', command.cmd);
     }
   };

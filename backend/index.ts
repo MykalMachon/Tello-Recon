@@ -20,6 +20,7 @@ io.on('connection', (socket: Socket) => {
   socket.on('drone-status', () => sendCommand('battery?'));
   socket.on('takeoff', () => sendCommand('takeoff'));
   socket.on('land', () => sendCommand('land'));
+  socket.on('passthrough', (cmd) => sendCommand(cmd));
 });
 
 drone.on('message', (msg: string) => {

@@ -1,20 +1,46 @@
-import drone, { sendCommand } from './controllers/flightController';
+import drone, {
+  broadcastStream,
+  sendCommand,
+} from './controllers/flightController';
+import * as WebSocket from 'ws';
 import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
-import { send } from 'node:process';
 
 const server = createServer();
-const io = new Server(server, {
+
+const streamServer = createServer((request, response) => {
+  console.log('Stream connection has come through');
+  request.on('data', (data) => {
+    // @ts-ignore
+    wsStreamSever.broadcast(data);
+  });
+});
+const wsStreamSever = new WebSocket.Server({
+  server: streamServer,
+});
+// @ts-ignore
+wsStreamSever.broadcast = (data: any) => {
+  wsStreamSever.clients.forEach(function each(client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(data);
+    }
+  });
+};
+
+const droneIo = new Server(server, {
   cors: {
     origin: '*',
   },
 });
 
-io.on('connection', (socket: Socket) => {
-  console.log('we have a connection!');
-  socket.on('hello', () => console.log('message from client recieved!'));
+droneIo.on('connection', (socket: Socket) => {
+  console.log('DRONE: we have a connection!');
   socket.on('drone-connect', () => {
     sendCommand('command');
+    sendCommand('streamon');
+    setTimeout(() => {
+      broadcastStream();
+    }, 3000);
     socket.emit('drone-connected');
   });
   socket.on('drone-status', () => sendCommand('battery?'));
@@ -28,4 +54,6 @@ drone.on('message', (msg: string) => {
 });
 
 server.listen(5000);
-console.log('\n🚀 Socket.io Server is listening on http://locahost:5000 \n');
+console.log('🚀 Socket.io Drone Server is listening on http://locahost:5000 ');
+streamServer.listen('5001');
+console.log('📺 Socket.io Stream Server is listening on ws://locahost:5001');

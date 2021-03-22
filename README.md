@@ -20,11 +20,14 @@ This has a number of practical applications:
 
 ## Getting Started
 
-Tello-Recon requires you to run both the frotend and backend simultaneously. 
+Tello-Recon requires you to run both the frotend and backend simultaneously.
+
 - The frontend acts as a control system and provides a livestream from the drone's camera
 - The backend acts as a bridge between the frontend and the drone
 
 With that in mind, to get this running you'll need to do the following:
+
+0. make sure that `ffmpeg` is installed on your system
 1. `npm install` && `npm run start` in both the `/frontend` and `/backend` folders
 2. turn on your drone
 3. connect to the Tello's wifi network from your computer

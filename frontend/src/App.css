@@ -17,6 +17,21 @@
   color: white;
 }
 
+button {
+  background: #1f2937;
+  color: #f3f4f6;
+  border: none;
+  padding: 0.8em 1.6em;
+  border-radius: 0.6em;
+  margin: 0px 0.6em;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -24,8 +39,8 @@
 /* PAGES */
 .page__home {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 720px 1fr;
+  grid-template-rows: 480px 1fr;
   width: 100%;
   height: 100vh;
   grid-gap: 0.5em;
@@ -35,8 +50,6 @@
 /* VIDEO */
 
 .videoFeed {
-  grid-row: span 3;
-  grid-column: span 4;
   background: black;
   color: white;
 }
@@ -50,14 +63,12 @@
 .controller {
   width: 100%;
   display: grid;
-  grid-template-columns: 7.2em 7.2em 7.2em 7.2em;
-  grid-template-rows: 7.2em 7.2em;
+  grid-template-columns: 7.2em 7.2em 7.2em 7.2em 7.2em;
+  grid-template-rows: 7.2em 7.2em 3.4em;
   grid-gap: 0.8em;
 }
 
 .controller-wrapper {
-  grid-column: span 2;
-
   padding: 2em;
   color: #d1d5db;
   background: #111827;
@@ -78,9 +89,15 @@
   place-items: center;
   background: #1f2937;
   padding: 1em;
+  margin: 0px;
   border-radius: 0.7em;
   border: 0px;
   color: #f3f4f6;
+  transition: all 0.3s eaes-in-out;
+}
+
+.controller-btn:last-of-type {
+  grid-column: span 5;
 }
 
 .controller-btn__key {
@@ -95,6 +112,60 @@
 
 .controller-btn.pressed {
   background: #374151;
+}
+
+.controller-btn:disabled {
+  opacity: 0.1;
+}
+
+/* connection panel */
+
+.connection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 1em;
+}
+
+.connection .drone_stats {
+  display: flex;
+  flex-direction: column;
+}
+
+/* logbook */
+
+.logbook {
+  overflow-y: scroll;
+  max-height: 100%;
+  background: #111827;
+  color: #d1d5db;
+}
+
+.logbook__logs {
+  padding: 0px 1em 1em 1em;
+}
+
+.logbook header {
+  position: sticky;
+  display: flex;
+  justify-content: space-between;
+  top: 0;
+  background: #111827;
+  margin: 0px;
+  padding: 1em;
+}
+
+.logbook header h4 {
+  margin: 0px;
+}
+
+.log {
+  margin: 0.5em 0px;
+}
+
+.log span {
+  color: #8e97aa;
+  font-size: 0.8em;
 }
 
 /* EXTRAS */

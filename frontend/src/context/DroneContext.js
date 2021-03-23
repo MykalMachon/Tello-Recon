@@ -5,14 +5,11 @@ export const DroneContext = createContext({
     socket: null,
     battery: 0,
     status: 'disconnected',
-    video: null,
-    log: null,
-    position: {
-      x: 0,
-      y: 0,
-      z: 0,
-      speed: 0,
-    },
+    speed: 50,
+    hDist: 100,
+    vDist: 50,
+    deg: 90,
+    logs: [],
   },
   dispatch: null,
 });
@@ -21,14 +18,11 @@ const initState = {
   socket: null,
   battery: 0,
   status: 'disconnected',
-  video: null,
-  log: null,
-  position: {
-    x: 0,
-    y: 0,
-    z: 0,
-    speed: 0,
-  },
+  speed: 50,
+  hDist: 100,
+  vDist: 50,
+  deg: 90,
+  logs: [],
 };
 
 // this handles all actions that can be taken on the drone directly
@@ -41,6 +35,19 @@ const droneReducer = (state, action) => {
         ...state,
         socket: action.payload.socket,
         status: action.payload.status,
+      };
+    case 'TRY_DISCONNECT':
+      return {
+        ...state,
+        socket: null,
+        status: 'disconnected',
+      };
+    case 'STATUS_CHANGE':
+      const newLogs = action.log ? [action.log, ...state.logs] : state.logs;
+      return {
+        ...state,
+        ...action.payload,
+        logs: newLogs,
       };
     default:
       return state;

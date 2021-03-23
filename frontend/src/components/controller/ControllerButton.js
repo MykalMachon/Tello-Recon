@@ -1,23 +1,24 @@
-import { useState } from 'react';
+import useTello from '../../hooks/useTello';
 
 const ControllerButton = ({ label, keyChar, press, release }) => {
-  const [active, setActive] = useState(false);
+  const { droneState } = useTello();
 
   const pressSwitch = () => {
     press();
-    setActive(true);
   };
 
   const releaseSwitch = () => {
     release();
-    setActive(false);
   };
 
   return (
     <button
-      className={`controller-btn ${active ? 'pressed' : ''}`}
+      className={`controller-btn`}
       onMouseDown={pressSwitch}
       onMouseUp={releaseSwitch}
+      disabled={
+        !droneState.socket || (keyChar !== ' ' && droneState.status === 'busy')
+      }
     >
       <span className="controller-btn__label">{label}</span>
       <span className="controller-btn__key">{keyChar}</span>

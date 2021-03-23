@@ -40,9 +40,11 @@ With that in mind, to get this running you'll need to do the following:
   - [x] Base our backend on [this repo](https://github.com/csscottc/drone-ctrl) (Josh)
   - [x] Setup basic client that can talk with the backend (Mykal)
   - [x] Setup API based on the Backend (Mykal)
-  - [ ] Setup video streaming / recording for review (Mykal)
-- [ ] Main Features & Extras
-  - [ ] Setup Drone controls in frontend (Josh)
-  - [ ] Setup live video feed in browser (Josh)
-- [ ] AI / Pathfinding
+  - [x] Setup video streaming (Mykal)
+  - [x] Setup flight log exporting (Mykal)
+  - [ ] Code cleanup / docs (Josh)
+- [x] Main Features & Extras
+  - [x] Setup Drone controls in frontend (Josh)
+  - [x] Setup live video feed in browser (Josh)
+- [x] AI / Pathfinding
   - [x] Literature review on pathfinding for drones

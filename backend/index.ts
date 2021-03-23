@@ -1,59 +1,38 @@
-import drone, {
-  broadcastStream,
+import createDroneServer, {
+  initDroneConnection,
   sendCommand,
-} from './controllers/flightController';
-import * as WebSocket from 'ws';
-import { createServer } from 'http';
-import { Server, Socket } from 'socket.io';
+} from './controllers/droneController';
+import createStreamServer, {
+  broadcastStream,
+} from './controllers/streamController';
+import { Socket } from 'socket.io';
 
-const server = createServer();
+// create a drone HTTP server, socket handler, and drone UDP client
+const { drone, droneServer, droneSocket } = createDroneServer();
+// create and initialize the stream server for drone video
+const streamServer = createStreamServer();
+// placeholder for killing the ffmpeg broadcast
+let killBroadcast: Function = () => {};
 
-const streamServer = createServer((request, response) => {
-  console.log('Stream connection has come through');
-  request.on('data', (data) => {
-    // @ts-ignore
-    wsStreamSever.broadcast(data);
-  });
-});
-const wsStreamSever = new WebSocket.Server({
-  server: streamServer,
-});
-// @ts-ignore
-wsStreamSever.broadcast = (data: any) => {
-  wsStreamSever.clients.forEach(function each(client) {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(data);
-    }
-  });
-};
-
-const droneIo = new Server(server, {
-  cors: {
-    origin: '*',
-  },
-});
-
-droneIo.on('connection', (socket: Socket) => {
+droneSocket.on('connection', (socket: Socket) => {
   console.log('DRONE: we have a connection!');
-  socket.on('drone-connect', () => {
-    sendCommand('command');
-    sendCommand('streamon');
-    setTimeout(() => {
-      broadcastStream();
-    }, 3000);
-    socket.emit('drone-connected');
+  // listen for a connection from the client
+  socket.on('drone-connect', async () => {
+    // init drone stuff, and return a callback to kill the stream later
+    killBroadcast = await initDroneConnection(socket, broadcastStream);
+    // setup handler for incoming drone messages
+    drone.on('message', (msg: string) => {
+      socket.emit('drone-response', `${msg}`);
+    });
   });
-  socket.on('drone-status', () => sendCommand('battery?'));
-  socket.on('takeoff', () => sendCommand('takeoff'));
-  socket.on('land', () => sendCommand('land'));
+  socket.on('drone-disconnect', () => {
+    sendCommand('streamoff');
+    killBroadcast();
+  });
   socket.on('passthrough', (cmd) => sendCommand(cmd));
 });
 
-drone.on('message', (msg: string) => {
-  console.log(`Tello Says 🤖: ${msg}`);
-});
-
-server.listen(5000);
+droneServer.listen(5000);
 console.log('🚀 Socket.io Drone Server is listening on http://locahost:5000 ');
 streamServer.listen('5001');
 console.log('📺 Socket.io Stream Server is listening on ws://locahost:5001');

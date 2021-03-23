@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useTello from '../../hooks/useTello';
 import ControllerButton from './ControllerButton';
 
@@ -10,19 +10,23 @@ const Controller = () => {
   // TODO add pivot commands
   // TODO add up / down commands
   const actions = [
-    { label: 'Pivot Left', key: 'q', cmd: '' },
-    { label: 'Forward', key: 'w', cmd: 'forward 100' },
-    { label: 'Pivot Right', key: 'e', cmd: '' },
-    { label: 'Takeoff', key: 'r', cmd: 'takeoff' },
-    { label: 'Left', key: 'a', cmd: 'left 100' },
-    { label: 'Backward', key: 's', cmd: 'back 100' },
-    { label: 'Right', key: 'd', cmd: 'right 100' },
-    { label: 'Land', key: 'f', cmd: 'land' },
+    { label: 'Pivot Left', key: 'q', cmd: `ccw ${droneState.deg}` },
+    { label: 'Forward', key: 'w', cmd: `forward ${droneState.hDist}` },
+    { label: 'Pivot Right', key: 'e', cmd: `cw ${droneState.deg}` },
+    { label: 'Ascend', key: 'r', cmd: `up ${droneState.vDist}` },
+    { label: 'Takeoff', key: 't', cmd: 'takeoff' },
+    { label: 'Left', key: 'a', cmd: `left ${droneState.hDist}` },
+    { label: 'Backward', key: 's', cmd: `back ${droneState.hDist}` },
+    { label: 'Right', key: 'd', cmd: `right ${droneState.hDist}` },
+    { label: 'Descend', key: 'f', cmd: `down ${droneState.vDist}` },
+    { label: 'Land', key: 'g', cmd: 'land' },
+    { label: '🛑 EMERGENCY STOP 🛑', key: ' ', cmd: 'emergency' },
   ];
 
   // setup listeners for the keyboard
   useEffect(() => {
     const keyDownHandler = (e) => {
+      console.log(`"${e.key}"`);
       handlePress(e.key);
     };
     const keyUpHandler = (e) => {
@@ -41,8 +45,8 @@ const Controller = () => {
   }, []);
 
   const handlePress = (key, ref) => {
-    console.log(`handling press ${key}`);
     const command = actions.find((control) => control.key === key);
+    console.log(command);
     if (command && droneState.socket) {
       // if the command exists && drone exists send the command!
       sendCommand('PASSTHROUGH', command.cmd);
